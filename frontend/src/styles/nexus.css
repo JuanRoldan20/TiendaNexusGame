@@ -1,0 +1,233 @@
+/* ===== Nexus Game · tema oscuro gamer sobre Bootstrap 5 =====
+   Hoja de estilos externa: personaliza variables de Bootstrap + componentes propios. */
+
+:root,
+[data-bs-theme='dark'] {
+  --nx-bg: #0b0918;
+  --nx-surface: #15112b;
+  --nx-surface-2: #1d1838;
+  --nx-borde: #2c2550;
+  --nx-morado: #a855f7;
+  --nx-morado-2: #7c3aed;
+  --nx-cian: #22d3ee;
+  --nx-texto: #e9e6f7;
+  --nx-gradiente: linear-gradient(90deg, var(--nx-morado), var(--nx-cian));
+
+  --bs-body-bg: var(--nx-bg);
+  --bs-body-color: var(--nx-texto);
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bs-border-color: var(--nx-borde);
+  --bs-link-color: var(--nx-cian);
+  --bs-link-color-rgb: 34, 211, 238;
+  --bs-link-hover-color: #67e8f9;
+  --bs-secondary-color: #a49cc9;
+  --bs-tertiary-bg: var(--nx-surface);
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(124, 58, 237, 0.18), transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, rgba(34, 211, 238, 0.1), transparent 60%),
+    var(--nx-bg);
+  background-attachment: fixed;
+}
+
+.font-display {
+  font-family: 'Orbitron', 'Inter', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.texto-gradiente {
+  background: var(--nx-gradiente);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Botones ---------- */
+.btn-nexus {
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-disabled-color: #cfc8ef;
+  background: linear-gradient(90deg, var(--nx-morado-2), #9333ea);
+  border: 0;
+  box-shadow: 0 0 0 rgba(168, 85, 247, 0);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.btn-nexus:hover {
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.55);
+  transform: translateY(-1px);
+}
+.btn-nexus:disabled {
+  background: var(--nx-surface-2);
+}
+.btn-cart {
+  --bs-btn-color: #0b0918;
+  --bs-btn-hover-color: #0b0918;
+  background: var(--nx-cian);
+  border: 0;
+  font-weight: 600;
+}
+
+/* ---------- Navbar / footer ---------- */
+.navbar-nexus {
+  background: rgba(11, 9, 24, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--nx-borde);
+}
+.navbar-nexus .nav-link.active {
+  color: var(--nx-cian);
+}
+.footer-nexus {
+  background: var(--nx-surface);
+  border-top: 1px solid var(--nx-borde);
+}
+.footer-nexus a {
+  color: var(--bs-secondary-color);
+  text-decoration: none;
+}
+.footer-nexus a:hover {
+  color: var(--nx-cian);
+}
+
+/* ---------- Tarjetas ---------- */
+.card-nexus {
+  --bs-card-bg: var(--nx-surface);
+  --bs-card-border-color: var(--nx-borde);
+  color: var(--nx-texto);
+  transition: transform 0.2s, border-color 0.2s;
+}
+a.card-nexus:hover,
+.card-nexus[data-testid='product-card']:hover {
+  border-color: var(--nx-morado);
+  transform: translateY(-3px);
+}
+.precio {
+  color: var(--nx-cian);
+  font-weight: 700;
+}
+
+.product-cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.product-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 12px);
+}
+.product-cover__iniciales {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  font-size: 2.6rem;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+.product-cover__categoria {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.6rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  z-index: 1;
+}
+
+/* ---------- Home ---------- */
+.hero-art {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(34, 211, 238, 0.25));
+  border: 1px solid var(--nx-borde);
+}
+.hero-art__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.hero-art__grid > div {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  background: rgba(11, 9, 24, 0.55);
+  border-radius: 1rem;
+  border: 1px solid var(--nx-borde);
+}
+.categoria-tile:hover {
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.25);
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: var(--nx-gradiente);
+  color: #0b0918;
+}
+
+/* ---------- Formularios ---------- */
+.form-control,
+.form-select {
+  background-color: var(--nx-surface-2);
+  border-color: var(--nx-borde);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--nx-morado);
+  box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25);
+}
+
+/* ---------- Vistas pendientes (TODO alumno) ---------- */
+.pendiente {
+  border: 2px dashed #f59e0b;
+  background: rgba(245, 158, 11, 0.06);
+}
+
+/* ---------- Panel de administración ---------- */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.admin-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: var(--nx-surface);
+  border-right: 1px solid var(--nx-borde);
+}
+.admin-sidebar .nav-link {
+  color: var(--nx-texto);
+}
+.admin-sidebar .nav-link.active {
+  background: var(--nx-gradiente);
+  color: #0b0918;
+  font-weight: 600;
+}
+.admin-main {
+  flex-grow: 1;
+  min-width: 0;
+}
+@media (max-width: 767.98px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+  .admin-sidebar {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid var(--nx-borde);
+  }
+}
+
+.table-dark {
+  --bs-table-bg: var(--nx-surface);
+  --bs-table-border-color: var(--nx-borde);
+}

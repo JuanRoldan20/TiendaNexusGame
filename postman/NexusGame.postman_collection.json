@@ -1,0 +1,532 @@
+{
+  "info": {
+    "name": "Nexus Game API v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Todas las peticiones pasan por el API Gateway. Ejecuta primero un Login: guarda el token en la variable {{token}}."
+  },
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://localhost:9080/api/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"admin@duoc.cl\",\n  \"password\": \"admin123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json();",
+                  "pm.collectionVariables.set('token', d.accessToken);",
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login VENDEDOR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"vendedor@duoc.cl\",\n  \"password\": \"vende123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json();",
+                  "pm.collectionVariables.set('token', d.accessToken);",
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login CLIENTE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"cliente@gmail.com\",\n  \"password\": \"cliente123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json();",
+                  "pm.collectionVariables.set('token', d.accessToken);",
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Registro (cliente)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/auth/registro",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"run\": \"19011029K\",\n  \"nombre\": \"Pedro\",\n  \"apellidos\": \"Pérez Muñoz\",\n  \"correo\": \"pedro@gmail.com\",\n  \"password\": \"pedro1\",\n  \"fechaNacimiento\": \"2000-05-10\",\n  \"region\": \"Región de Ñuble\",\n  \"comuna\": \"Chillán\",\n  \"direccion\": \"Calle 1 #234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Registro con errores (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/auth/registro",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"run\": \"19011022K\",\n  \"nombre\": \"\",\n  \"apellidos\": \"X\",\n  \"correo\": \"x@hotmail.com\",\n  \"password\": \"12\",\n  \"direccion\": \"\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Refresh token (TODO B3 - 501)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/auth/refresh",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"...\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Catálogo",
+      "item": [
+        {
+          "name": "Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/productos?page=0&size=24",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Buscar por texto y categoría",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/productos?q=consola&categoriaId=3",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Solo ofertas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/productos?ofertas=true",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Detalle producto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/productos/1",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Listar categorías",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/categorias",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Crear producto (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/productos",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"JPC010\",\n  \"nombre\": \"Galactic Raiders\",\n  \"descripcion\": \"Shooter espacial cooperativo\",\n  \"precio\": 34990,\n  \"precioOferta\": null,\n  \"stock\": 15,\n  \"stockCritico\": 4,\n  \"imagen\": null,\n  \"categoriaId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Editar producto (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/productos/1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"JPC001\",\n  \"nombre\": \"Starfall Odyssey\",\n  \"descripcion\": \"RPG espacial\",\n  \"precio\": 39990,\n  \"precioOferta\": 27990,\n  \"stock\": 25,\n  \"stockCritico\": 5,\n  \"imagen\": null,\n  \"categoriaId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Eliminar producto (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base}}/productos/13",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear categoría (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/categorias",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Merchandising\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Productos críticos (TODO B2 - 501)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/productos/criticos",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Mi perfil",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/usuarios/me",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar mi perfil",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/usuarios/me",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Camila\",\n  \"apellidos\": \"Cliente Gamer\",\n  \"fechaNacimiento\": \"2001-11-20\",\n  \"region\": \"Región del Biobío\",\n  \"comuna\": \"Talcahuano\",\n  \"direccion\": \"Colón 1000\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar usuarios (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/usuarios",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ver usuario (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/usuarios/1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Boletas",
+      "item": [
+        {
+          "name": "Crear boleta / checkout (TODO B1 - 501)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/boletas",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"productoId\": 1,\n      \"cantidad\": 2\n    },\n    {\n      \"productoId\": 9,\n      \"cantidad\": 1\n    }\n  ],\n  \"envio\": {\n    \"nombre\": \"Camila Cliente Gamer\",\n    \"correo\": \"cliente@gmail.com\",\n    \"region\": \"Región del Biobío\",\n    \"comuna\": \"Concepción\",\n    \"direccion\": \"Los Carrera 890, depto 21\",\n    \"indicaciones\": \"Dejar en conserjería\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mis boletas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/boletas/mias",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Todas las boletas (ADMIN / VENDEDOR)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/boletas",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Detalle boleta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/boletas/1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
